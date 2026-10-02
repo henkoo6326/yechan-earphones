@@ -1,19 +1,19 @@
 import './style.css';
 import {ASSETS} from './assets.js';
-import {createState,probability,collect,ask,nextDay,restore,MAX_KNOTS,PINK_CHARACTER_ID} from './rules.js';
+import {createState,probability,collect,ask,nextDay,startState,MAX_KNOTS,PINK_CHARACTER_ID} from './rules.js';
 import {createWorld,replaceModel,THREE} from './world.js';
 import {portraitSVG} from './portrait.js';
 import {setupIntro} from './intro.js';
 import {createCastMotion} from './cast-motion.js';
 import {createHeldEarphones,createEarphoneSequence,EARPHONE_FRAMES,frameForKnots} from './earphones.js';
 const $=id=>document.getElementById(id);
-let state;try{state=restore(JSON.parse(localStorage.getItem('seoul-knot-save')))}catch{state=createState()}
+let state;try{state=startState(JSON.parse(localStorage.getItem('seoul-knot-save')))}catch{state=createState()}
 let introActive=true,active=null,nearest=null,target=null,toastTimer,world,heldEarphones,earphoneSequence;
 const keys=new Set();
 const save=()=>{if(world)state.position=[world.playerRoot.position.x,world.playerRoot.position.z];try{localStorage.setItem('seoul-knot-save',JSON.stringify(state))}catch{toast('저장 공간을 사용할 수 없어 이번 진행은 현재 화면에서만 유지돼요.')}};
 function toast(message){$('toast').textContent=message;$('toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3200)}
 addEventListener('item-load-error',()=>toast('시계 모델을 불러오지 못해 임시 아이템으로 표시합니다. 새로고침해주세요.'));
-const intro=setupIntro(()=>{introActive=false;keys.clear();target=null;if(!world)return;if(state.knots===0)showEnding();else toast('골목을 걸어보세요. 반짝이는 아이템을 모으면 행운이 올라가요.');});
+const intro=setupIntro(()=>{introActive=false;keys.clear();target=null;if(!world)return;save();toast('골목을 걸어보세요. 반짝이는 아이템을 모으면 행운이 올라가요.');});
 try{world=createWorld($('world'),ASSETS.characters)}catch(e){console.error(e);const notice=document.createElement('div');notice.style.cssText='position:fixed;inset:30%;padding:30px;background:#fff8f0;z-index:20';notice.textContent='3D 화면을 시작하지 못했어요. WebGL을 지원하는 브라우저에서 하드웨어 가속을 켜고 다시 열어주세요.';$('world').append(notice);}
 if(world)boot();
 function boot(){
