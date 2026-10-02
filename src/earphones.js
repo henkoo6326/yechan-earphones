@@ -3,7 +3,7 @@ import {MAX_KNOTS} from './rules.js';
 export const EARPHONE_FRAMES=Array.from({length:6},(_,i)=>`${import.meta.env?.BASE_URL??'/'}assets/earphones/0${i+1}.png`);
 export const frameForKnots=knots=>Math.max(0,Math.min(5,MAX_KNOTS-knots));
 export function createHeldEarphones(player){
- const group=new THREE.Group();group.name='held-earphones';player.add(group);
+ const group=new THREE.Group();group.name='held-earphones';group.scale.setScalar(2);player.add(group);
  const cableMaterial=new THREE.MeshStandardMaterial({color:'#fff9ec',roughness:.55});
  let current=-1;const handPosition=new THREE.Vector3();
  function setKnots(knots){if(current===knots)return;current=knots;
