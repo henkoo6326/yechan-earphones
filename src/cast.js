@@ -21,7 +21,7 @@ const greetings=[
  '오늘은 노란색이 잘 어울리는 날이죠? 그 줄은 왜 그렇게 엉켰어요?'
 ];
 export const CAST=rows.map(([id,name,role,slug,position,color,height],i)=>({
- id,name,role,position,color,height:height*2.54,rotation:0,model:base+slug+'.glb',portrait:base+`portrait-${i+1}.png`,
+ id,name,role,position,color,height:height*2.54,rotation:0,model:base+slug+'.glb',portrait:base+`portrait-${i+1}${i>0?'-cutout':''}.png`,
  hair:i===1||i===4?'#70402a':'#29242b',outfit:i===0?'#ee76a4':i===7?'#ffd74b':'#29272d',
  greeting:greetings[i],help:'잠깐만요, 여기를 빼고… 됐다! 매듭 하나 풀었어요. 남은 것도 잘 풀리면 좋겠네요.',
  reject:'앗, 지금은 조금 바빠서요. 미안해요! 다음에 만나면 다시 이야기해요.'
