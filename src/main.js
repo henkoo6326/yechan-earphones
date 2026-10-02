@@ -65,7 +65,7 @@ function boot(){
  const horizontal=innerWidth>850?2.4:0;
  desired.set(playerRoot.position.x*.25+horizontal,30,focusZ+28);
  camera.position.lerp(desired,1-Math.exp(-dt*4));look.set(playerRoot.position.x*.25+horizontal,0,focusZ);camera.lookAt(look);
- for(const [i,n]of npcs.entries()){const p=n.root.position.clone();p.y=2.5;p.project(camera);labels[i].style.left=`${(p.x*.5+.5)*innerWidth}px`;labels[i].style.top=`${(-p.y*.5+.5)*innerHeight}px`;labels[i].hidden=!!active||p.z>1||p.x<-1||p.x>1||p.y<-1||p.y>1;labels[i].innerHTML=`<b>${state.attempts[n.config.id]?'✓':'♡'}</b> ${n.config.name}`;}
+ for(const [i,n]of npcs.entries()){const p=n.root.position.clone();p.y=n.config.height+.45;p.project(camera);labels[i].style.left=`${(p.x*.5+.5)*innerWidth}px`;labels[i].style.top=`${(-p.y*.5+.5)*innerHeight}px`;labels[i].hidden=!!active||p.z>1||p.x<-1||p.x>1||p.y<-1||p.y>1;labels[i].innerHTML=`<b>${state.attempts[n.config.id]?'✓':'♡'}</b> ${n.config.name}`;}
  for(const [i,item]of items.entries()){item.root.rotation.y=time*.001+i;item.root.position.y=.7+Math.sin(time*.002+i)*.1}
  renderer.render(scene,camera);
  if(time-lastSave>2000&&!introActive){lastSave=time;save()}
@@ -89,6 +89,10 @@ function requestHelp(n){
 }
 function closeDialogue(){active=null;$('dialogue').hidden=true;keys.clear();$('talk').focus();}
 function showEnding(){
+ const endingPhoto=$('ending').querySelector('.ending-photo');
+ endingPhoto.src=state.ending==='pink'?(import.meta.env.BASE_URL+'assets/ending-couple.png'):EARPHONE_FRAMES[5];
+ endingPhoto.alt=state.ending==='pink'?'풀린 이어폰을 함께 들고 노을 아래 웃는 예찬과 유나':'완전히 풀린 이어폰을 들고 웃는 예찬';
+ $('ending').classList.toggle('couple-ending',state.ending==='pink');
  $('ending').querySelector('h2').textContent=state.ending==='pink'?'예찬아, 이제 같이 듣자.':'풀린 건, 이어폰만이 아니었어.';
  $('ending-text').textContent=state.ending==='pink'?'분홍빛 옷의 유나가 웃으며 손을 내밀었다. 복잡하게 엉킨 줄이 한 번에 풀리고, 드디어 둘이 함께 들을 음악이 시작됐다.':`${state.day}일 동안의 작은 부탁 끝에 이어폰이 풀렸어요. 우연히 나눈 인사들이 오늘의 가장 좋은 음악이 되었네요.`;
  if(!$('ending').open)$('ending').showModal();
