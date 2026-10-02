@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {probability,createState,collect,ask,nextDay,restore} from './rules.js';
+test('chance stays within 25–75%, including excess items',()=>{assert.equal(probability(0),.25);assert.equal(probability(5),.5);for(let n=10;n<1000;n++)assert.equal(probability(n),.75)});
+test('items can only be collected once',()=>{const s=createState();assert.equal(collect(s,'gift-0'),true);assert.equal(collect(s,'gift-0'),false);assert.equal(probability(s.items.length),.3)});
+test('75% still rejects at boundary, no reroll on same person',()=>{const s=createState();s.items=Array.from({length:10},(_,i)=>`gift-${i}`);assert.equal(ask(s,'sora',()=>.75),'rejected');assert.equal(ask(s,'sora',()=>0),'already');assert.equal(s.knots,5)});
+test('success removes a knot, rejection tangles one, day retains progress',()=>{const s=createState();collect(s,'gift-0');assert.equal(ask(s,'sora',()=>0),'helped');assert.equal(s.knots,4);assert.equal(ask(s,'haeun',()=>.99),'rejected');assert.equal(s.knots,5);nextDay(s);assert.equal(s.day,2);assert.equal(s.items.length,1);for(const id of ['sora','haeun','minseo','chaerin'])assert.equal(ask(s,id,()=>0),'helped');assert.equal(ask(s,'jiwon',()=>0),'complete');assert.equal(s.knots,0)});
+test('pink character completes all knots without rolling, also after earlier rejection',()=>{const s=createState();s.attempts.yuna='rejected';assert.equal(ask(s,'yuna',()=>{throw Error('must not roll')}),'complete');assert.equal(s.knots,0);assert.equal(s.ending,'pink');assert.equal(restore(s).ending,'pink')});
+test('restoration rejects invalid values and deduplicates inventory',()=>{const s=restore({day:-1,knots:-5,items:['gift-0','gift-0','bogus'],attempts:{x:'helped'},position:[Infinity,NaN]});assert.equal(s.knots,5);assert.equal(s.day,1);assert.deepEqual(s.items,['gift-0']);assert.deepEqual(s.attempts,{});assert.deepEqual(s.position,[0,8])});
+test('old three-knot saves migrate to six visual stages',()=>{assert.equal(restore({knots:3}).knots,5);assert.equal(restore({knots:0}).knots,0);assert.equal(restore({version:2,knots:3}).knots,3)});

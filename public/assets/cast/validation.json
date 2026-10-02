@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pink-singer",
+    "vertices": 24527,
+    "polygons": 24606,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "curly-maid",
+    "vertices": 42076,
+    "polygons": 42352,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "short-maid",
+    "vertices": 32402,
+    "polygons": 32848,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "bob-maid",
+    "vertices": 32402,
+    "polygons": 32848,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "long-maid",
+    "vertices": 30686,
+    "polygons": 31016,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "bun-maid",
+    "vertices": 30568,
+    "polygons": 30920,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "straight-maid",
+    "vertices": 30206,
+    "polygons": 30536,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  },
+  {
+    "id": "yellow-dress",
+    "vertices": 22635,
+    "polygons": 22494,
+    "bones": 16,
+    "animations": [
+      "Idle",
+      "Walk"
+    ]
+  }
+]

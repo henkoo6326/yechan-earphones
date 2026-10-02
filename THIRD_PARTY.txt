@@ -1,0 +1,5 @@
+MediaPipe canonical face topology
+Source: https://github.com/google-ai-edge/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model.obj
+Copyright Google LLC / MediaPipe Authors. Apache License 2.0.
+MediaPipe 0.10.21 was used locally for facial landmark estimation. Its code and model runtime are not required to open the finished character.
+The supplied photographs were processed locally and remain the user's source materials.
